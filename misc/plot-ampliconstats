@@ -84,17 +84,16 @@ my $prefix = shift(@ARGV);
 # Check gnuplot version.
 #
 # We need >= 5.0 in order to cope with "matrix rowheaders" command.
-my $g=`gnuplot --version` || die "gnuplot: $!";
+#EDIT : hardcoded gnuplot location
+my $g=`/Users/fd6/testhomebrew/homebrew/bin/gnuplot --version` || die "/Users/fd6/testhomebrew/homebrew/bin/gnuplot: $!";
 $g=~m/gnuplot ([\d.]+)/;
 if ($1 < 5) {
     print STDERR "Plot-ampliconstats needs gnuplot version 5.0 or later (found $1)\n";
     exit 1;
 }
-
 #-----------------------------------------------------------------------------
 # Load plot meta-data
 # This allows us to auto-scale plots.
-
 my $namp = 0;
 my $nfile = 0;
 my $ref_len = 0;
@@ -106,10 +105,8 @@ while (<>) {
     $ref_len = $F[2] if (/^SS\tReference length/);
     last if (/^SS\tEnd of summary/);
 }
-
 #-----------------------------------------------------------------------------
 # Open up our various gnuplot output files
-
 # TODO: When nfile is too large we will need to paginate and produce
 # multiple plots in a for loop.  This may change the structure of this
 # code with the headers being printed inline with the processing loop
@@ -269,7 +266,8 @@ while (<>) {
         if (defined($fh_reads)) {
             print $fh_reads "\nend\n";
             close($fh_reads);
-            system("gnuplot $prefix-heat-reads-$fh_reads_page.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-reads-$fh_reads_page.gp") && die $!;
             undef $fh_reads;
         }
         $fh_reads_page++;
@@ -313,7 +311,8 @@ END
         if (defined($fh_depth)) {
             print $fh_depth "\nend\n";
             close($fh_depth);
-            system("gnuplot $prefix-heat-depth-$fh_depth_page.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-depth-$fh_depth_page.gp") && die $!;
             undef $fh_depth;
         }
         $fh_depth_page++;
@@ -355,7 +354,8 @@ END
         if (defined($fh_amp)) {
             print $fh_amp "\nend\n";
             close($fh_amp);
-            system("gnuplot $prefix-heat-amp-$fh_amp_page.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-amp-$fh_amp_page.gp") && die $!;
             undef $fh_amp;
         }
         $fh_amp_page++;
@@ -411,13 +411,15 @@ END
         if (defined($fh_rperc)) {
             print $fh_rperc "\nend\n";
             close($fh_rperc);
-            system("gnuplot $prefix-heat-read-perc-$fh_rperc_page.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-read-perc-$fh_rperc_page.gp") && die $!;
             undef $fh_rperc;
         }
         if (defined($fh_rperl)) {
             print $fh_rperl "\nend\n";
             close($fh_rperl);
-            system("gnuplot $prefix-heat-read-perc-log-$fh_rperc_page.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-read-perc-log-$fh_rperc_page.gp") && die $!;
             undef $fh_rperl;
         }
         $fh_rperc_page++;
@@ -485,7 +487,8 @@ END
             my $tmp = $fh_cover{$1};
             print $tmp "\nend\n";
             close($fh_cover{$1});
-            system("gnuplot $prefix-heat-coverage-$1-$fh_cover_page{$1}.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-coverage-$1-$fh_cover_page{$1}.gp") && die $!;
             undef $fh_cover{$1};
         }
         $fh_cover_page{$1}++;
@@ -583,7 +586,8 @@ END
 
         if ($2 eq "STDDEV") {
             close($fh);
-            system("gnuplot $prefix-combined-coverage-$1.gp") && die $!;
+            #EDIT : hardcoded gnuplot location
+            system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-combined-coverage-$1.gp") && die $!;
         }
     }
 
@@ -627,37 +631,43 @@ END
 if (defined($fh_depth)) {
     print $fh_depth "\nend\n";
     close($fh_depth);
-    system("gnuplot $prefix-heat-depth-$fh_depth_page.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-depth-$fh_depth_page.gp") && die $!;
 }
 
 if (defined($fh_amp)) {
     print $fh_amp "\nend\n";
     close($fh_amp);
-    system("gnuplot $prefix-heat-amp-$fh_amp_page.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-amp-$fh_amp_page.gp") && die $!;
 }
 
 if (defined($fh_reads)) {
     print $fh_reads "\nend\n";
     close($fh_reads);
-    system("gnuplot $prefix-heat-reads-$fh_reads_page.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-reads-$fh_reads_page.gp") && die $!;
 }
 
 if (defined($fh_rperc)) {
     print $fh_rperc "\nend\n";
     close($fh_rperc);
-    system("gnuplot $prefix-heat-read-perc-$fh_rperc_page.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-read-perc-$fh_rperc_page.gp") && die $!;
 }
 
 if (defined($fh_rperl)) {
     print $fh_rperl "\nend\n";
     close($fh_rperl);
-    system("gnuplot $prefix-heat-read-perc-log-$fh_rperc_page.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-read-perc-log-$fh_rperc_page.gp") && die $!;
 }
 
 foreach (keys %fh_cover) {
     if (defined($fh_cover{$_})) {
         close($fh_cover{$_});
-        system("gnuplot $prefix-heat-coverage-$_-$fh_cover_page{$_}.gp") && die $!;
+        #EDIT : hardcoded gnuplot location
+        system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-heat-coverage-$_-$fh_cover_page{$_}.gp") && die $!;
     }
 }
 
@@ -719,7 +729,8 @@ plot "\$mean" using (0):(column(0)+1):(\$1 > 0.001 ? (\$1 < max_range ? \$1 : ma
 END
 }
 close($ch_reads);
-system("gnuplot $prefix-combined-reads.gp") && die $!;
+#EDIT : hardcoded gnuplot location
+system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-combined-reads.gp") && die $!;
 
 # combind-depth
 if ($opts{orient} eq "h") {
@@ -767,13 +778,16 @@ plot "\$mean" using (0):(column(0)+1):(\$1 > 0.001 ? (\$1 < max_range ? \$1 : ma
 END
 }
 close($ch_depth);
-system("gnuplot $prefix-combined-depth.gp") && die $!;
+#EDIT : hardcoded gnuplot location
+system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-combined-depth.gp") && die $!;
 
 close($ch_rperc);
-system("gnuplot $prefix-combined-read-perc.gp") && die $!;
+#EDIT : hardcoded gnuplot location
+system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-combined-read-perc.gp") && die $!;
 
 close($ch_amp);
-system("gnuplot $prefix-combined-amp.gp") && die $!;
+#EDIT : hardcoded gnuplot location
+system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $prefix-combined-amp.gp") && die $!;
 
 
 
@@ -834,7 +848,8 @@ END
     print $fh "@{$file{$f}{FTCOORD}}\nend\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
 
     #--- Template coordinates vs size: FILE
     my $fn = "$prefix-$ff-tsize";  # filename prefix
@@ -887,7 +902,8 @@ END
     print $fh "@sorted\nend\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
   skip_coord:
 
     #--- Template coordinates: COMBINED
@@ -937,7 +953,8 @@ END
 	print $fh "@combined_coord\nend\n";
 
 	close($fh);
-	system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+	system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
     }
 
 
@@ -1001,7 +1018,8 @@ END
     print $fh "end\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
 
 
     #--- Template depth: FILE
@@ -1065,7 +1083,8 @@ END
 	print $fh "end\n";
 
 	close($fh);
-	system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+	system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
     }
 
     #--- Read count / depth
@@ -1118,7 +1137,8 @@ END
     print $fh "@{$file{$f}{FVDEPTH}}[2..$#{$file{$f}{FVDEPTH}}]\nend\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
 
     #--- Read %coverage and %read-per-amplicon
     my $fn = "$prefix-$ff-cov";  # filename prefix
@@ -1202,7 +1222,8 @@ END
     #print $fh "@{$file{$f}{FRPERC}}[2..$#{$file{$f}{FRPERC}}]\nend\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
 
 
     #--- Amplicon primer correctness
@@ -1246,7 +1267,78 @@ END
     print $fh "@{$file{$f}{FAMP}}[1..$#{$file{$f}{FAMP}}]\nend\n";
 
     close($fh);
-    system("gnuplot $fn.gp") && die $!;
+    #EDIT : hardcoded gnuplot location
+    system("/Users/fd6/testhomebrew/homebrew/bin/gnuplot $fn.gp") && die $!;
 
     $combined_done = 1;
 }
+
+#---------------------------------
+#adding html file to show plots
+
+my $fname  = "index.html";
+my $prefix = '';
+open(my $fh,'>',$fname) or error("$fname: $!");
+    print $fh q[
+        <html>
+        <head>
+        <style>
+                .thumbnail
+                {
+                    text-decoration:none;
+                    color:black;
+                    font-weight:bold;
+                }
+                .thumbnail span  /*CSS for enlarged image*/
+                {
+                    visibility: hidden;
+                    position: absolute;
+                    padding: 5px;
+                    border: 1px solid #000;
+                    background-color: #e5e5e5;
+                }
+                .thumbnail:hover span  /*CSS for enlarged image on hover*/
+                {
+                    visibility: visible;
+                    left: 550px;
+                    top: 10px;
+                }
+                .imgs td
+                {
+                    vertical-align:middle;
+                    padding: 0.5em;
+                    border: 1px solid black;
+                }
+                table.imgs
+                {
+                    border-collapse:collapse;
+                    margin-left:20px;
+                }
+                .pad { padding-left:1em; vertical-align:top; }
+                .right { text-align:right; padding-left:1em; }
+            </style>
+        </head>
+        <body>
+            <table class="imgs">
+    ];
+
+my @imgs = <./*.png>;
+for (my $i=0; $i < @imgs; $i++)
+{
+    if ( $i % 3 == 0 )
+    {
+    
+        if ( $i>0 ) { print $fh "</tr>\n"; }
+        print $fh "<tr>";
+        print $fh qq[<td><a class="thumbnail" href="$imgs[$i]"><img src="$imgs[$i]" width="400px"><br><img src="$prefix$imgs[$i].png"></a></td>];
+    }
+    else {print $fh qq[<td><a class="thumbnail" href="$imgs[$i]"><img src="$imgs[$i]" width="400px"><br><img src="$prefix$imgs[$i].png"></a></td>];}
+
+}
+print $fh qq[
+            </table>
+        </body>
+        </html>
+    ];
+
+    close($fh);
